@@ -13,20 +13,20 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `npx cdk diff`    compare deployed stack with current state
 * `npx cdk synth`   emits the synthesized CloudFormation template
 
-[!Note]
-
-Do not use :
-
-* `cdk deploy`
-* `cdk diff`
-* `cdk synth`
+> **_NOTE_**
+>
+> Do not use :
+>
+> * `cdk deploy`
+> * `cdk diff`
+> * `cdk synth`
 
 Because these run the cdk version installed on your local terminal/computer instead of the cdk binary in the **node_modules** folders.
 
 The generated **cdk.out** could differs between team members.
 
-Always use :
-
-* `npx cdk deploy`
-* `npx cdk diff`
-* `npx cdk synth`
+> Always use :
+>
+> * `npx cdk deploy`
+> *  `npx cdk diff`
+> * `npx cdk synth`
