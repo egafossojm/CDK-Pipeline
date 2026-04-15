@@ -25,9 +25,9 @@ export class CdkPipelineStack extends cdk.Stack {
           "npm install -g aws-cdk",   // Install CDK CLI
         ],
         commands: [
-          "npm ci",
-          "npm run build",
-          "npx cdk synth"
+          "npm ci", //Install dependencies listed in package-lock.json. Clean install, faster, consistent . Instead of npm install that could upgrade packages and resolv version differently
+          "npm run build", // Compile your TypeScript into JavaScript. Runs the "build" script from your package.json
+          "npx cdk synth" // Generate the CloudFormation templatess, after this codepipeline will deploy them
         ],
       }),
     });
