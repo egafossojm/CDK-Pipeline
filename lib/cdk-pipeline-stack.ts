@@ -4,8 +4,6 @@ import { Construct } from 'constructs';
 import * as pipelines from 'aws-cdk-lib/pipelines';
 import { PipelineType } from "aws-cdk-lib/aws-codepipeline";
 
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
-
 export class CdkPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -19,7 +17,7 @@ export class CdkPipelineStack extends cdk.Stack {
 
     // Create pipeline with S3 source
     const pipeline = new pipelines.CodePipeline(this, "Pipeline", {
-      pipelineName: "WorkshopPipeline",
+      pipelineName: "CDKPipeline",
       pipelineType: PipelineType.V2,
       synth: new pipelines.CodeBuildStep("SynthStep", {
         input: source,
