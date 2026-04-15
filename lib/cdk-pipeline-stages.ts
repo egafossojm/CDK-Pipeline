@@ -5,13 +5,16 @@ import { Construct } from 'constructs';
 
 
 export class BucketStage extends Stage {
+  public readonly bucketStack: BucketStack;
+
   constructor(scope: Construct, id: string, props?: StageProps) {
     super(scope, id, props);
 
-    const bucketProps = {
+    const bucketProps: BucketStackProps = {
       bucketName: 'stage-bucket-ss23j3232',
     }
-    const bucket = new BucketStack(this, 'bucket', bucketProps);
+
+    this.bucketStack = new BucketStack(this, 'bucket', bucketProps);
       
   }
 }

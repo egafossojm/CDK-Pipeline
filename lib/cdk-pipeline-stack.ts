@@ -23,7 +23,7 @@ export class CdkPipelineStack extends cdk.Stack {
       }),
     });
 
-    // Create pipeline with S3 source
+    // Create pipeline with GitHub SOurce
     const pipeline = new pipelines.CodePipeline(this, "Pipeline", {
       pipelineName: "CDKPipeline",
       pipelineType: PipelineType.V2,
@@ -40,9 +40,30 @@ export class CdkPipelineStack extends cdk.Stack {
       }),
     });
 
-        // Add deployment stage
+    // Add Bucket deployment stage
+    const bucketStage = new BucketStage(this, 'bucket');
+    const bucketStageDeployment = pipeline.addStage(bucketStage);
 
-        const bucketStage = new BucketStage(this, 'bucket');
-        pipeline.addStage(bucketStage);
+    // Add test actions
+    bucketStageDeployment.addPost(
+      new pipelines.CodeBuildStep("CheckBucketExists", {
+        commands: [
+          "aws s3 ls s3://$BUCKET_NAME"
+        ],
+        envFromCfnOutputs: {
+          BUCKET_NAME: bucketStage.bucketStack.bucketNameOutput
+        }
+      }),
+
+      new pipelines.CodeBuildStep("UploadTestFile", {
+        commands: [
+          "echo 'hello world' > test.txt",
+          "aws s3 cp test.txt s3://$BUCKET_NAME/"
+        ],
+        envFromCfnOutputs: {
+          BUCKET_NAME: bucketStage.bucketStack.bucketNameOutput,
+        }
+      })
+    );
   }
 }

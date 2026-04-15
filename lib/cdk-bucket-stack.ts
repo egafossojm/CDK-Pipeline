@@ -8,16 +8,22 @@ export interface BucketStackProps extends StackProps {
 }
 
 export class BucketStack extends Stack {
+  public readonly bucketNameOutput: CfnOutput;
+
   constructor(scope: Construct, id: string, props: BucketStackProps) {
     super(scope, id, props);
 
-    new s3.Bucket(this, 'Bucket', {
+    const bucket = new s3.Bucket(this, 'Bucket', {
         blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
         encryption: s3.BucketEncryption.S3_MANAGED,
         enforceSSL: true,
         versioned: true,
         removalPolicy: RemovalPolicy.RETAIN,
         bucketName: props.bucketName,
+      });
+
+      this.bucketNameOutput = new CfnOutput(this, "BucketName", {
+        value: bucket.bucketName,
       });
       
   }
