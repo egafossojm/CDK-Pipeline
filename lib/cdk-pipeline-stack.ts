@@ -8,7 +8,15 @@ export class CdkPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Access the CommitId of a GitHub source in the synth
+    /* Access the CommitId of a GitHub source in the synth
+
+    The Personal access tokens (classic) is created in the GiHub Account.
+    It has the permissions :
+         - repo: Full control of private repositories
+         - admin:repo_hook: Full control of repository hooks
+    The secret name in Secret Manager is "github-token"
+    The Plaintext token Key/Value is like {"token":"ghp_abcdefghismEit1NYgJ8rnIvYO3gMP4w"}
+    */
     const source = pipelines.CodePipelineSource.gitHub('egafossojm/CDK-Pipeline', 'main', {
       authentication: cdk.SecretValue.secretsManager('github-token', {
         jsonField: 'token'
