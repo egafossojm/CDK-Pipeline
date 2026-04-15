@@ -21,6 +21,9 @@ export class CdkPipelineStack extends cdk.Stack {
       pipelineType: PipelineType.V2,
       synth: new pipelines.CodeBuildStep("SynthStep", {
         input: source,
+        installCommands: [
+          "npm install -g aws-cdk",   // Install CDK CLI
+        ],
         commands: [
           "npm ci",
           "npm run build",
